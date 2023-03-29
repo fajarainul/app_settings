@@ -198,6 +198,15 @@ class AppSettings {
     if (callback != null) handleCallback(callback);
   }
 
+  /// Future async method call to open Alarms & Reminders settings.
+  static Future<void> openBiometricEnrollSettings(
+      {bool asAnotherTask = false, Function? callback}) async {
+    await _channel.invokeMethod('biometric', {
+      'asAnotherTask': asAnotherTask,
+    });
+    if (callback != null) handleCallback(callback);
+  }
+
   static void handleCallback(Function callback) {
     callback();
   }

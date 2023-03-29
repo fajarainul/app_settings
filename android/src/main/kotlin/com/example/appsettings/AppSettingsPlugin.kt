@@ -153,6 +153,16 @@ class AppSettingsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         } else if (call.method == "alarm") {
             val uri = Uri.fromParts("package", this.activity.packageName, null)
             openSettingsWithCustomIntent(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, uri), asAnotherTask)
+        }else if (call.method == "biometric") {
+            var url: String = Settings.ACTION_SECURITY_SETTINGS;
+            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                url = Settings.ACTION_BIOMETRIC_ENROLL;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                url = Settings.ACTION_FINGERPRINT_ENROLL;
+            }
+
+            openSettings(url, asAnotherTask)
         }
         result.success("Done")
     }
